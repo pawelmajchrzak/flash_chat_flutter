@@ -14,7 +14,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
@@ -49,9 +48,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   email = value;
-                  //Do something with the user input.
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: "Enter your email"),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: "Enter your email"),
               ),
               SizedBox(
                 height: 8.0,
@@ -61,9 +60,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   password = value;
-                  //Do something with the user input.
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: "Enter your password"),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: "Enter your password"),
               ),
               SizedBox(
                 height: 24.0,
@@ -73,7 +72,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   showSpinner = true;
                 });
                 try {
-                  final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+                  final newUser = await _auth.createUserWithEmailAndPassword(
+                      email: email, password: password);
                   if (newUser != null) {
                     Navigator.pushNamed(context, ChatScreen.id);
                   }

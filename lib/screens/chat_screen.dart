@@ -35,21 +35,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getMessages() async {
-    final messages = await _firestore.collection('messages').get();
-    for (var message in messages.docs) {
-      print(message.data());
-    }
-  }
-
-  void messagesStream() async {
-    await for (var snapshot in _firestore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +116,8 @@ class MessagesStream extends StatelessWidget {
 
           final currentUser = loggedInUser.email;
 
-          final messageBubble = MessageBubble(messageSender, messageText, currentUser == messageSender);
+          final messageBubble = MessageBubble(
+              messageSender, messageText, currentUser == messageSender);
           messageBubbles.add(messageBubble);
         }
         return Expanded(
@@ -158,7 +144,8 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             sender,

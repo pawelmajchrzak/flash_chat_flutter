@@ -6,7 +6,6 @@ import 'chat_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginScreen extends StatefulWidget {
-
   static String id = 'login_screen';
 
   @override
@@ -14,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
@@ -49,9 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   email = value;
-                  //Do something with the user input.
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: "Enter your email"),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: "Enter your email"),
               ),
               SizedBox(
                 height: 8.0,
@@ -61,9 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 textAlign: TextAlign.center,
                 onChanged: (value) {
                   password = value;
-                  //Do something with the user input.
                 },
-                decoration: kTextFieldDecoration.copyWith(hintText: "Enter your password"),
+                decoration: kTextFieldDecoration.copyWith(
+                    hintText: "Enter your password"),
               ),
               SizedBox(
                 height: 24.0,
@@ -73,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   showSpinner = true;
                 });
                 try {
-                  final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                  final user = await _auth.signInWithEmailAndPassword(
+                      email: email, password: password);
                   if (user != null) {
                     Navigator.pushNamed(context, ChatScreen.id);
                   }
@@ -84,31 +83,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   showSpinner = false;
                 });
               }),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(vertical: 16.0),
-              //   child: Material(
-              //     color: Colors.lightBlueAccent,
-              //     borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              //     elevation: 5.0,
-              //     child: MaterialButton(
-              //       onPressed: () {
-              //         //Implement login functionality.
-              //         Navigator.pushNamed(context,'/chat');
-              //       },
-              //       minWidth: 200.0,
-              //       height: 42.0,
-              //       child: Text(
-              //         'Log In',
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
       ),
     );
   }
-
-
 }

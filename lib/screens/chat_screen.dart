@@ -77,6 +77,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       _firestore.collection('messages').add({
                         'text': messageText,
                         'sender': loggedInUser.email,
+                        'time': DateTime.now(),
                       });
                     },
                     child: Text(
@@ -107,18 +108,19 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data?.docs.reversed;
+        final messages = snapshot.data?.docs;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages!) {
           var data = message.data() as Map;
           final messageText = data['text'];
           final messageSender = data['sender'];
-
+          final messageTime = data['time'];
           final currentUser = loggedInUser.email;
 
           final messageBubble = MessageBubble(
-              messageSender, messageText, currentUser == messageSender);
+              messageSender, messageText, currentUser == messageSender, messageTime);
           messageBubbles.add(messageBubble);
+          messageBubbles.sort((a , b ) => b.time.compareTo(a.time));
         }
         return Expanded(
           child: ListView(
@@ -134,10 +136,11 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(this.sender, this.text, this.isMe);
+  MessageBubble(this.sender, this.text, this.isMe, this.time);
   final String sender;
   final String text;
   final bool isMe;
+  final Timestamp time;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +151,7 @@ class MessageBubble extends StatelessWidget {
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
-            sender,
+            ' $sender ${time.toDate()}',
             style: TextStyle(fontSize: 12.0, color: Colors.black54),
           ),
           Material(
